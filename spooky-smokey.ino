@@ -1,4 +1,6 @@
-#define TRIGGER_PIN 3
+#define TRIGGER_PIN A0
+#define SERVO_0_PIN 7
+#define SERVO_1_PIN 8
 
 const unsigned int IDLE_TIME_INTERVAL = 30000;
 unsigned int idle_start_time;
