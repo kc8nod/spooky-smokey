@@ -1,3 +1,6 @@
+
+#include "show_functions.h"
+
 #define TRIGGER_PIN A0
 #define SERVO_0_PIN 7
 #define SERVO_1_PIN 8
@@ -5,7 +8,11 @@
 const unsigned int IDLE_TIME_INTERVAL = 30000;
 unsigned int idle_start_time;
 
-void (*show_table)(void)[] = {
+
+
+void show_attract(){}
+
+void (*show_table[])(void) = {
     show0,
     show1,
     show2,
@@ -15,9 +22,9 @@ void (*show_table)(void)[] = {
 #define SHOW_TABLE_COUNT  (sizeof(show_table) / sizeof(show_table[0]))
 
 void setup() {
-  pinmode(TRIGGER_PIN, INPUT_PULLUP);
+  pinMode(TRIGGER_PIN, INPUT_PULLUP);
 
-  Serial.begin();
+  Serial.begin(9600);
   restart_idle_time();
 
   Serial.println("Starting!");
@@ -49,12 +56,3 @@ boolean idle_time_expired(){
     return (millis() - idle_start_time) > IDLE_TIME_INTERVAL;
 }
 
-void show0(){}
-
-void show1(){}
-
-void show2(){}
-
-void show3(){}
-
-void show_attract(){}
