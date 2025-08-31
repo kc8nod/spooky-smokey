@@ -109,41 +109,38 @@ void test(){
   led.off();
 
   Serial.println("red");
-  led.set_front(4095, 0, 0);
-  delay(500);
-  led.set_middle(4095, 0, 0);
-  delay(500);
-  led.set_back(4095, 0, 0);
-  delay(500);
   led.set_moon(4095, 0, 0);
   delay(500);
 
   Serial.println("green");
-  led.set_front(0, 4095, 0);
-  delay(500);
-  led.set_middle(0, 4095, 0);
-  delay(500);
-  led.set_back(0, 4095, 0);
-  delay(500);
   led.set_moon(0, 4095, 0);
   delay(500);
 
   Serial.println("blue");
-  led.set_front(0, 0, 4095);
-  delay(500);
-  led.set_middle(0, 0, 4095);
-  delay(500);
-  led.set_back(0, 0, 4095);
-  delay(500);
   led.set_moon(0, 0, 4095);
   delay(500);
-  ghost_left.write(0);  
   led.off();
 
-  Serial.println("Key left - right");
+  Serial.println("gate");
+  led.set_gate(4095);
+  delay(1000);
+  led.set_gate(0);
+
+  Serial.println("hill1");
+  led.set_hill1(4095);
+  delay(1000);
+  led.set_hill1(0);
+
+  Serial.println("hill2");
+  led.set_hill2(4095);
+  delay(1000);
+  led.set_hill2(0);
+
+  Serial.println("Key left");
   led.set_key_left(4095);
   delay(1000);
   led.set_key_left(0);
+  Serial.println("Key right");
   led.set_key_right(4095);
   delay(1000);
   led.off();
@@ -164,11 +161,14 @@ void test(){
   ghost_right.write(GHOST_COUNTERCLOCKWISE);
   delay(1000);
   ghost_right.write(GHOST_STOP);
+
+  stop();
 }
 
 void stop(){
   Serial.println("stop");
   led.off();
   sound.stop();
-  ghost_left.write(0);
+  ghost_left.write(90);
+  ghost_right.write(GHOST_STOP);
 }

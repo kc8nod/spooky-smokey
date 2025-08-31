@@ -10,19 +10,19 @@ boolean LEDboard::begin() {
     return tlc.begin();
 }
 
-void LEDboard::set_front(uint16_t r, uint16_t g, uint16_t b) {
-    tlc.setLED(RGB_FRONT, r, g, b);
+void LEDboard::set_gate(uint16_t v) {
+    tlc.setPWM(LED_GATE, v);
+    tlc.write();
+}
+void LEDboard::set_hill1(uint16_t v) {
+    tlc.setPWM(LED_HILL_ONE, v);
+    tlc.write();
+}
+void LEDboard::set_hill2(uint16_t v) {
+    tlc.setPWM(LED_HILL_TWO, v);
     tlc.write();
 }
 
-void LEDboard::set_middle(uint16_t r, uint16_t g, uint16_t b) {
-    tlc.setLED(RGB_MIDDLE, r, g, b);
-    tlc.write();
-}
-void LEDboard::set_back(uint16_t r, uint16_t g, uint16_t b) {
-    tlc.setLED(RGB_BACK, r, g, b);
-    tlc.write();
-}
 void LEDboard::set_moon(uint16_t r, uint16_t g, uint16_t b) {
     tlc.setLED(RGB_MOON, r, g, b);
     tlc.write();
