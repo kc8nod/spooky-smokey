@@ -1,6 +1,7 @@
+#include <SoftwareSerial.h>
+#define HAS_SOFTWARE_SERIAL
 #include "DYPlayerArduino.h"
 #include "LEDboard.h"
-#include <SoftwareSerial.h>
 #include <Servo.h>
 
 /*
@@ -37,8 +38,8 @@ void (*show_table[])(void) = {
 };
 #define SHOW_TABLE_COUNT  (sizeof(show_table) / sizeof(show_table[0]))
 
-SoftwareSerial::SoftwareSerial PlayerSerialPort(PLAYER_SERIAL_RX, PLAYER_SERIAL_TX);
-DY::Player player(&PlayerSerialPort);
+SoftwareSerial playerSerialPort(PLAYER_SERIAL_RX, PLAYER_SERIAL_TX);
+DY::Player sound(&playerSerialPort);
 
 LEDboard led = LEDboard(SPI_CLK, SPI_DATA, SPI_LATCH);
 
@@ -48,7 +49,7 @@ Servo ghost_right;
 void setup() {
   pinMode(TRIGGER, INPUT_PULLUP);
   led.begin();
-  player.begin();
+  sound.begin();
   ghost_left.attach(GHOST_SERVO_LEFT);
   ghost_right.attach(GHOST_SERVO_RIGHT);
 
@@ -71,6 +72,7 @@ void loop() {
     restart_idle_time();
   }
 
+test();
 
   if(idle_time_expired()){
     show_attract();
@@ -85,19 +87,19 @@ boolean idle_time_expired(){
 }
 
 void show0() {
-    player.play(0);
+    sound.playSpecified(0);
 }
 
 void show1() {
-    player.play(1);
+    sound.playSpecified(1);
 }
 
 void show2() {
-    player.play(2);
+    sound.playSpecified(2);
 }
 
 void show3() {
-    player.play(3);
+    sound.playSpecified(3);
 }
 
 void show_attract(){}
@@ -105,6 +107,8 @@ void show_attract(){}
 void test(){
   Serial.println("self test");
   led.off();
+
+  Serial.println("red");
   led.set_front(4095, 0, 0);
   delay(500);
   led.set_middle(4095, 0, 0);
@@ -114,6 +118,7 @@ void test(){
   led.set_moon(4095, 0, 0);
   delay(500);
 
+  Serial.println("green");
   led.set_front(0, 4095, 0);
   delay(500);
   led.set_middle(0, 4095, 0);
@@ -123,6 +128,7 @@ void test(){
   led.set_moon(0, 4095, 0);
   delay(500);
 
+  Serial.println("blue");
   led.set_front(0, 0, 4095);
   delay(500);
   led.set_middle(0, 0, 4095);
@@ -131,9 +137,10 @@ void test(){
   delay(500);
   led.set_moon(0, 0, 4095);
   delay(500);
-
+  ghost_left.write(0);  
   led.off();
 
+  Serial.println("Key left - right");
   led.set_key_left(4095);
   delay(1000);
   led.set_key_left(0);
@@ -141,13 +148,17 @@ void test(){
   delay(1000);
   led.off();
 
-  player.play(5);
+  Serial.println("sound");
+  sound.playSpecified(5);
 
+  Serial.println("left ghost");
   ghost_left.write(GHOST_CLOCKWISE);
   delay(1000);
   ghost_left.write(GHOST_COUNTERCLOCKWISE); 
   delay(1000);
   ghost_left.write(GHOST_STOP);
+
+  Serial.println("right ghost");
   ghost_right.write(GHOST_CLOCKWISE);
   delay(1000);
   ghost_right.write(GHOST_COUNTERCLOCKWISE);
@@ -158,6 +169,6 @@ void test(){
 void stop(){
   Serial.println("stop");
   led.off();
-  player.stop();
-  ghost_left.write(0)
+  sound.stop();
+  ghost_left.write(0);
 }

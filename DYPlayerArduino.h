@@ -31,9 +31,7 @@ namespace DY
     Player(HardwareSerial *port);
 #endif
 
-#ifdef HAS_SOFTWARE_SERIAL
     Player(SoftwareSerial *port);
-#endif
     void begin();
     void serialWrite(uint8_t *buffer, uint8_t len);
     bool serialRead(uint8_t *buffer, uint8_t len);
