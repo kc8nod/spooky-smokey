@@ -1,16 +1,24 @@
 #include "DYPlayerArduino.h"
 #include "LEDboard.h"
+#include <SoftwareSerial.h>
+#include <Servo.h>
 
 /*
  * Arduino pin assignments
  */
 #define TRIGGER           A0
-#define GHOST_SERVO_LEFT  7
-#define GHOST_SERVO_RIGHT 8
+#define PLAYER_SERIAL_RX   2
+#define PLAYER_SERIAL_TX   3
+#define SPI_DATA           4
+#define SPI_CLK            5
+#define SPI_LATCH          6
+#define GHOST_SERVO_LEFT   7
+#define GHOST_SERVO_RIGHT  8
 
-#define SPI_DATA  4
-#define SPI_CLK   5
-#define SPI_LATCH 6
+/* Ghost Constants */
+#define GHOST_CLOCKWISE 0
+#define GHOST_COUNTERCLOCKWISE 180
+#define GHOST_STOP 90
 
 const unsigned int IDLE_TIME_INTERVAL = 30000;
 unsigned int idle_start_time;
@@ -29,20 +37,26 @@ void (*show_table[])(void) = {
 };
 #define SHOW_TABLE_COUNT  (sizeof(show_table) / sizeof(show_table[0]))
 
-DY::Player player();
+SoftwareSerial::SoftwareSerial PlayerSerialPort(PLAYER_SERIAL_RX, PLAYER_SERIAL_TX);
+DY::Player player(&PlayerSerialPort);
 
 LEDboard led = LEDboard(SPI_CLK, SPI_DATA, SPI_LATCH);
+
+Servo ghost_left;
+Servo ghost_right;  
 
 void setup() {
   pinMode(TRIGGER, INPUT_PULLUP);
   led.begin();
+  player.begin();
+  ghost_left.attach(GHOST_SERVO_LEFT);
+  ghost_right.attach(GHOST_SERVO_RIGHT);
 
   Serial.begin(9600);
-
-
+  test();
   Serial.println("Starting!");
-
-restart_idle_time();}
+  restart_idle_time();
+}
 
 void loop() {
   if(digitalRead(TRIGGER) == LOW){
@@ -71,24 +85,25 @@ boolean idle_time_expired(){
 }
 
 void show0() {
-    // TODO: implement show0 logic
+    player.play(0);
 }
 
 void show1() {
-    // TODO: implement show1 logic
+    player.play(1);
 }
 
 void show2() {
-    // TODO: implement show2 logic
+    player.play(2);
 }
 
 void show3() {
-    // TODO: implement show3 logic
+    player.play(3);
 }
 
 void show_attract(){}
 
 void test(){
+  Serial.println("self test");
   led.off();
   led.set_front(4095, 0, 0);
   delay(500);
@@ -125,4 +140,24 @@ void test(){
   led.set_key_right(4095);
   delay(1000);
   led.off();
+
+  player.play(5);
+
+  ghost_left.write(GHOST_CLOCKWISE);
+  delay(1000);
+  ghost_left.write(GHOST_COUNTERCLOCKWISE); 
+  delay(1000);
+  ghost_left.write(GHOST_STOP);
+  ghost_right.write(GHOST_CLOCKWISE);
+  delay(1000);
+  ghost_right.write(GHOST_COUNTERCLOCKWISE);
+  delay(1000);
+  ghost_right.write(GHOST_STOP);
+}
+
+void stop(){
+  Serial.println("stop");
+  led.off();
+  player.stop();
+  ghost_left.write(0)
 }
