@@ -3,8 +3,11 @@
 
 enum class FadeState {
     FADING,
-    CONSTANT
+    CONSTANT,
+    FLICKERING
 };
+
+#define FLICK_TIME 200
 
 class FadeValue {
 public:
@@ -12,11 +15,14 @@ public:
     void set(int16_t value);
     void on();
     void off();
+    void flicker(uint32_t interval_ms);
     int16_t getValue() const;
     void fade(uint32_t duration_ms, int16_t targetValue, int16_t startValue);
     void fade(uint32_t duration_ms, int16_t targetValue);
     void update();
     FadeState getState() const;
+
+    int percent(int p);
 
 private:
     int16_t value;
@@ -29,4 +35,7 @@ private:
     uint32_t duration;
     int16_t startValue;
     int16_t targetValue;
+    uint32_t flickerInterval;
+
+    void flick();
 };

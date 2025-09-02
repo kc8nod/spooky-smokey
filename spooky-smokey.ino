@@ -107,7 +107,7 @@ void show1() {
     // 0-3 no lights
     ledBoard.off();
     wait_until(3000);
-    
+
     // 3-41.   Fade in to 100% and slow shift between all lights to a visible level % ..
     //  flicker and off
     // Ghosts run full time from 3-41
@@ -121,11 +121,21 @@ void show1() {
 
 void show2() {
     // 0002
+    sound.playSpecified(2);
 
     // 0-4
     // Hill 1 fade in to 75% at 5
+    wait_until(2000);
+    ledBoard.gate.fade(3000, ledBoard.gate.percent(75));
+
     // Hill2 fade in to 75 @8
+    wait_until(5000);
+    ledBoard.hill1.fade(3000, ledBoard.hill1.percent(75));
+
     // Hill 3 in to 75% @ 11
+    wait_until(8000);
+    ledBoard.hill2.fade(3000, ledBoard.hill2.percent(75));
+
 
     // Moon to full (or phases cycle full)
 
@@ -190,21 +200,15 @@ void test(){
    ledBoard.off();
 
    Serial.println("red");
-   ledBoard.moon_r.set(4095);
-   ledBoard.moon_g.set(0);
-   ledBoard.moon_b.set(0);
+   ledBoard.moon.set(4095, 0 , 0);
    wait(500);
 
    Serial.println("green");
-   ledBoard.moon_r.set(0);
-   ledBoard.moon_g.set(4095);
-   ledBoard.moon_b.set(0);
+   ledBoard.moon.set(0, 4095, 0);
    wait(500);
 
    Serial.println("blue");
-   ledBoard.moon_r.set(0);
-   ledBoard.moon_g.set(4095);
-   ledBoard.moon_b.set(0);
+   ledBoard.moon.set(0, 0, 4095);
    wait(500);
    ledBoard.off();
 

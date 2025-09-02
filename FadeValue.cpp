@@ -35,23 +35,50 @@ void FadeValue::fade(uint32_t duration_ms, int16_t target) {
 }
 
 void FadeValue::update() {
-    if (state != FadeState::FADING) {
-        return;
-    }
-
     uint32_t elapsedTime = millis() - startTime;
     
-    if (elapsedTime >= duration) {
-        // Fade is complete
-        value = targetValue;
-        state = FadeState::CONSTANT;
-        return;
-    }
+    switch(state) {
+        case FadeState::CONSTANT:
+            // do nothing, just maintain current value
+            break;
 
-    // Use Arduino's map and constrain functions for interpolation
-    set(map(elapsedTime, 0, duration, startValue, targetValue));
+        case FadeState::FADING:
+            if (elapsedTime >= duration) {
+                // Fade is complete
+                value = targetValue;
+                state = FadeState::CONSTANT;
+            } else {
+                // Use Arduino's map and constrain functions for interpolation
+                set(map(elapsedTime, 0, duration, startValue, targetValue));
+            }
+            break;
+    
+        case FadeState::FLICKERING:
+                set(constrain(map(elapsedTime, 0, duration, startValue, targetValue), startValue, targetValue));
+                if (elapsedTime >= duration) {
+                    // Flicker cycle complete
+                    flick();
+                }
+            break;
+    }
+}
+
+void FadeValue::flicker(uint32_t interval_ms) {
+    flickerInterval = interval_ms;
+    state = FadeState::FLICKERING;
+}
+
+void FadeValue::flick() {
+    startTime = millis();
+    duration = random(FLICK_TIME, flickerInterval);
+    startValue = MIN_VALUE;
+    targetValue = value;
 }
 
 FadeState FadeValue::getState() const {
     return state;
+}
+
+int FadeValue::percent(int p) {
+    return (p * this->MAX_VALUE) / 100;
 }

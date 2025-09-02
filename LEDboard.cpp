@@ -5,9 +5,7 @@ LEDboard::LEDboard(uint8_t c, uint8_t d, uint8_t l)
       gate(),
       hill1(),
       hill2(),
-      moon_r(),
-      moon_g(),
-      moon_b(),
+      moon(),
       key_left(),
       key_right() {
 }
@@ -21,9 +19,7 @@ void LEDboard::update() {
     gate.update();
     hill1.update();
     hill2.update();
-    moon_r.update();
-    moon_g.update();
-    moon_b.update();
+    moon.update();
     key_left.update();
     key_right.update();
 }
@@ -32,9 +28,7 @@ void LEDboard::write() {
     tlc.setPWM(LED_GATE, gate.getValue());
     tlc.setPWM(LED_HILL_ONE, hill1.getValue());
     tlc.setPWM(LED_HILL_TWO, hill2.getValue());
-    tlc.setPWM(LED_MOON_RED, moon_r.getValue());
-    tlc.setPWM(LED_MOON_GREEN, moon_g.getValue());
-    tlc.setPWM(LED_MOON_BLUE, moon_b.getValue());
+    tlc.setLED(LED_MOON_IDX, moon.red.getValue(), moon.green.getValue(), moon.blue.getValue());
     tlc.setPWM(LED_KEY_LEFT, key_left.getValue());
     tlc.setPWM(LED_KEY_RIGHT, key_right.getValue());
 
@@ -46,4 +40,32 @@ void LEDboard::off() {
         tlc.setLED(i, 0, 0, 0);
     }
     tlc.write();
+}
+
+void MoonValue::set(int r, int g, int b) {
+    red.set(r);
+    green.set(g);
+    blue.set(b);
+}
+
+void MoonValue::fade(int duration, int r, int g, int b) {
+    red.fade(duration, r);
+    green.fade(duration, g);
+    blue.fade(duration, b);
+}
+
+void MoonValue::fade_pct(int duration, int p) {
+    int v = red.percent(p);
+    fade(duration, v, v, v);
+}
+
+void MoonValue::update() {
+    red.update();
+    green.update();
+    blue.update();
+}
+
+void MoonValue::set_pct(int p) {
+    int v = red.percent(p);
+    set(v, v, v);
 }

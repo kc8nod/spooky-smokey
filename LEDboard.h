@@ -14,9 +14,7 @@
 /*
  * indexes and channel assignments for the TLC5947
  */
-#define LED_MOON_RED 9
-#define LED_MOON_BLUE 10
-#define LED_MOON_GREEN 11
+#define LED_MOON_IDX 3
 
 #define LED_GATE  0
 #define LED_HILL_ONE 1
@@ -31,6 +29,20 @@ public:
     
     // Constructor - can use parent's constructor
     using FadeValue::FadeValue;
+    
+};
+
+class MoonValue {
+public:
+    void set(int r, int g, int b);
+    void set_pct(int p);
+    void fade(int duration, int r, int g, int b);
+    void fade_pct(int duration, int p);
+    void update();
+
+    LEDValue red = LEDValue();
+    LEDValue green = LEDValue();
+    LEDValue blue = LEDValue();
 };
 
 class LEDboard {
@@ -40,15 +52,14 @@ public:
     LEDValue gate;
     LEDValue hill1;
     LEDValue hill2;
-    LEDValue moon_r;
-    LEDValue moon_g;
-    LEDValue moon_b;
+    MoonValue moon;
     LEDValue key_left;
     LEDValue key_right;
 
     void update();
     void off();
     void write();
-private:
+
+    private:
     Adafruit_TLC5947 tlc;
 };
