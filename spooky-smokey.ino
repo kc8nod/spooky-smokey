@@ -27,10 +27,11 @@ void start_show(){ show_start_time = millis(); }
 unsigned int show_elapsed(){ return millis() - show_start_time; }
 
 void wait_until(unsigned int t){
-  while(show_elapsed() < t) { 
+  do {
     update_all();
-  }
+  } while(show_elapsed() < t);
 }
+
 void wait(unsigned int t){
   wait_until(show_elapsed() + t);
 }
