@@ -1,38 +1,43 @@
 #include "LEDboard.h"
 
-#include "LEDboard.h"
-
-LEDboard::LEDboard(uint8_t c, uint8_t d, uint8_t l) : tlc(1, c, d, l) {
-    // Constructor implementation
+LEDboard::LEDboard(uint8_t c, uint8_t d, uint8_t l) 
+    : tlc(1, c, d, l),
+      gate(),
+      hill1(),
+      hill2(),
+      moon_r(),
+      moon_g(),
+      moon_b(),
+      key_left(),
+      key_right() {
 }
 
 boolean LEDboard::begin() {
     return tlc.begin();
 }
 
-void LEDboard::set_gate(uint16_t v) {
-    tlc.setPWM(LED_GATE, v);
-    tlc.write();
-}
-void LEDboard::set_hill1(uint16_t v) {
-    tlc.setPWM(LED_HILL_ONE, v);
-    tlc.write();
-}
-void LEDboard::set_hill2(uint16_t v) {
-    tlc.setPWM(LED_HILL_TWO, v);
-    tlc.write();
+
+void LEDboard::update() {
+    gate.update();
+    hill1.update();
+    hill2.update();
+    moon_r.update();
+    moon_g.update();
+    moon_b.update();
+    key_left.update();
+    key_right.update();
 }
 
-void LEDboard::set_moon(uint16_t r, uint16_t g, uint16_t b) {
-    tlc.setLED(RGB_MOON, r, g, b);
-    tlc.write();
-}
-void LEDboard::set_key_left(uint16_t v) {
-    tlc.setPWM(LED_KEY_LEFT, v);
-    tlc.write();
-}
-void LEDboard::set_key_right(uint16_t v) {
-    tlc.setPWM(LED_KEY_RIGHT, v);
+void LEDboard::write() {
+    tlc.setPWM(LED_GATE, gate.getValue());
+    tlc.setPWM(LED_HILL_ONE, hill1.getValue());
+    tlc.setPWM(LED_HILL_TWO, hill2.getValue());
+    tlc.setPWM(LED_MOON_RED, moon_r.getValue());
+    tlc.setPWM(LED_MOON_GREEN, moon_g.getValue());
+    tlc.setPWM(LED_MOON_BLUE, moon_b.getValue());
+    tlc.setPWM(LED_KEY_LEFT, key_left.getValue());
+    tlc.setPWM(LED_KEY_RIGHT, key_right.getValue());
+
     tlc.write();
 }
 
