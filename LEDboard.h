@@ -14,7 +14,7 @@
 /*
  * indexes and channel assignments for the TLC5947
  */
-#define LED_MOON_IDX 3
+#define LED_MOON_IDX 3 // pins 9, 10 and 11
 
 #define LED_GATE  0
 #define LED_HILL_ONE 1

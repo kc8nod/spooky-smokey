@@ -8,7 +8,7 @@
 /*
  * Arduino pin assignments
  */
-#define TRIGGER           A0
+#define TRIGGER           A5
 #define PLAYER_SERIAL_RX   2
 #define PLAYER_SERIAL_TX   3
 #define SPI_DATA           4
