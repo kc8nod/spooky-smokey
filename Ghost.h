@@ -23,6 +23,8 @@ public:
     Ghost(int pin);
     void update();
     void set(int speed);
+    void set_pct(int p);
     void ramp(int duration, int target);
+    void ramp_pct(int duration, int p);
     void stop();
 };

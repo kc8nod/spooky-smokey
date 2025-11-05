@@ -36,10 +36,12 @@ void LEDboard::write() {
 }
 
 void LEDboard::off() {
-    for(int i=0; i<24; i++) {
-        tlc.setLED(i, 0, 0, 0);
-    }
-    tlc.write();
+    gate.off();
+    hill1.off();
+    hill2.off();
+    moon.set(0, 0, 0);
+    key_left.off();
+    key_right.off();
 }
 
 void MoonValue::set(int r, int g, int b) {
