@@ -240,18 +240,19 @@ void show2() {
     // 0-4
     // Hill 1 fade in to 75% at 5
     wait_until(2000);
-    ledBoard.gate.fade(3000, ledBoard.gate.percent(75));
+    ledBoard.gate.fadePercent(3000, 75);
 
     // Hill2 fade in to 75 @8
     wait_until(5000);
-    ledBoard.hill1.fade(3000, ledBoard.hill1.percent(75));
+    ledBoard.hill1.fadePercent(3000, 75);
 
     // Hill 3 in to 75% @ 11
     wait_until(8000);
-    ledBoard.hill2.fade(3000, ledBoard.hill2.percent(75));
+    ledBoard.hill2.fadePercent(3000, 75);
 
 
     // Moon to full (or phases cycle full)
+    ledBoard.moon.fade_pct(2000, ledBoard.)
 
     // Key lights follow sound of crow calls
 

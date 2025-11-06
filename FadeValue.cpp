@@ -10,6 +10,10 @@ void FadeValue::set(int16_t newValue) {
     state = FadeState::CONSTANT;
 }
 
+void FadeValue::setPercent(int p) {
+    set(percent(p));
+}
+
 void FadeValue::on() {
     set(MAX_VALUE);
 }
@@ -30,8 +34,16 @@ void FadeValue::fade(uint32_t duration_ms, int16_t target, int16_t start) {
     state = FadeState::FADING;
 }
 
+void FadeValue::fadePercent(uint32_t duration_ms, int16_t targetPercent, int16_t startPercent) {
+    this->fade(duration_ms, percent(targetPercent), percent(startPercent));
+}
+
 void FadeValue::fade(uint32_t duration_ms, int16_t target) {
     this->fade(duration_ms, target, this->value);
+}
+
+void FadeValue::fadePercent(uint32_t duration_ms, int16_t targetPercent) {
+    this->fade(duration_ms, percent(targetPercent));
 }
 
 void FadeValue::update() {

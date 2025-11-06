@@ -13,12 +13,15 @@ class FadeValue {
 public:
     FadeValue();
     void set(int16_t value);
+    void setPercent(int16_t pct);
     void on();
     void off();
     void flicker(uint32_t interval_ms);
     int16_t getValue() const;
     void fade(uint32_t duration_ms, int16_t targetValue, int16_t startValue);
+    void fadePercent(uint32_t duration_ms, int16_t targetPct, int16_t startPct);
     void fade(uint32_t duration_ms, int16_t targetValue);
+    void fadePercent(uint32_t duration_ms, int16_t targetPct);
     void update();
     FadeState getState() const;
 
