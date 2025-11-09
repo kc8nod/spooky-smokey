@@ -110,51 +110,51 @@ void show1() {
     wait_until(3000);
 
     // 3-41.   Fade in to 100% and slow shift between all lights to a visible level % ..
-    ledBoard.gate.fade(5000, ledBoard.gate.percent(50));
-    ledBoard.hill1.fade(5000, ledBoard.hill1.percent(50));
-    ledBoard.hill2.fade(5000, ledBoard.hill2.percent(50));
+    ledBoard.gate.fadePercent(5000, 50);
+    ledBoard.hill1.fadePercent(5000, 50);
+    ledBoard.hill2.fadePercent(5000, 50);
     ledBoard.moon.fade_pct(5000, 50);
-    ledBoard.key_left.fade(5000, ledBoard.key_left.percent(50));
-    ledBoard.key_right.fade(5000, ledBoard.key_right.percent(50));
+    ledBoard.key_left.fadePercent(5000, 50);
+    ledBoard.key_right.fadePercent(5000, 50);
 
     ghost_left.ramp(5000, GhostValue::DEFAULT_VALUE - 60);
     ghost_right.ramp(5000, GhostValue::DEFAULT_VALUE + 60);
 
     wait(5000);
 
-    ledBoard.gate.fade(5000, ledBoard.gate.percent(80));
+    ledBoard.gate.fadePercent(5000, 80);
     ledBoard.moon.fade_pct(5000, 80);
 
     wait(5000);
 
-    ledBoard.hill1.fade(5000, ledBoard.hill1.percent(80));
-    ledBoard.hill2.fade(5000, ledBoard.hill2.percent(80));
-    ledBoard.gate.fade(5000, ledBoard.gate.percent(50));
+    ledBoard.hill1.fadePercent(5000, 80);
+    ledBoard.hill2.fadePercent(5000, 80);
+    ledBoard.gate.fadePercent(5000, 50);
     ledBoard.moon.fade_pct(5000, 50);
 
     wait(5000);
 
-    ledBoard.key_left.fade(5000, ledBoard.key_left.percent(80));
-    ledBoard.gate.fade(5000, ledBoard.gate.percent(80));
-    ledBoard.hill1.fade(5000, ledBoard.hill1.percent(50));
-    ledBoard.hill2.fade(5000, ledBoard.hill2.percent(50));
+    ledBoard.key_left.fadePercent(5000, 80);
+    ledBoard.gate.fadePercent(5000, 80);
+    ledBoard.hill1.fadePercent(5000, 50);
+    ledBoard.hill2.fadePercent(5000, 50);
 
     wait(5000);
 
     // t=23sec
-    ledBoard.key_left.fade(2000, ledBoard.key_left.percent(50));
-    ledBoard.key_right.fade(2000, ledBoard.key_right.percent(80));
-    ledBoard.gate.fade(2000, ledBoard.gate.percent(50));
+    ledBoard.key_left.fadePercent(2000, 50);
+    ledBoard.key_right.fadePercent(2000, 80);
+    ledBoard.gate.fadePercent(2000, 50);
 
     wait(2000);
 
     // t=25sec
-    ledBoard.gate.fade(5000, ledBoard.gate.percent(30));
-    ledBoard.hill1.fade(5000, ledBoard.hill1.percent(30));
-    ledBoard.hill2.fade(5000, ledBoard.hill2.percent(30));
+    ledBoard.gate.fadePercent(5000, 30);
+    ledBoard.hill1.fadePercent(5000, 30);
+    ledBoard.hill2.fadePercent(5000, 30);
     ledBoard.moon.fade_pct(5000, 30);
-    ledBoard.key_left.fade(5000, ledBoard.key_left.percent(30));
-    ledBoard.key_right.fade(5000, ledBoard.key_right.percent(30));
+    ledBoard.key_left.fadePercent(5000, 30);
+    ledBoard.key_right.fadePercent(5000, 30);
 
     //caw 1 27.6 - 28.1
     wait_until(27600);
@@ -252,7 +252,7 @@ void show2() {
 
 
     // Moon to full (or phases cycle full)
-    ledBoard.moon.fade_pct(2000, ledBoard.)
+    ledBoard.moon.fade_pct(2000, 100);
 
     // Key lights follow sound of crow calls
 
