@@ -158,56 +158,57 @@ void show1() {
 
     //caw 1 27.6 - 28.1
     wait_until(27600);
-    ledBoard.key_left.fade(250, ledBoard.key_left.percent(100));
+    ledBoard.key_left.fadePercent(250, 100);
     wait(250);
     ledBoard.key_left.fade(250, 0);
 
     //caw 2 28.4 - 29.0
     wait_until(28400);
-    ledBoard.key_left.fade(300, ledBoard.key_left.percent(100));
+    ledBoard.key_left.fadePercent(300, 100);
     wait(300);
     ledBoard.key_left.fade(300, 0);
 
     //caw 3 29.2 - 29.8
     wait_until(29200);
-    ledBoard.key_left.fade(400, ledBoard.key_left.percent(100));
+    ledBoard.key_left.fadePercent(400, 100);
     wait(400);
     ledBoard.key_left.fade(400, 0);
 
     wait_until(30000);
-    ledBoard.gate.fade(2000, ledBoard.gate.percent(100));
+    ledBoard.gate.fadePercent(2000, 100);
     wait(2000);
 
 
-    ledBoard.gate.fade(1000, ledBoard.gate.percent(80));
-    ledBoard.hill1.fade(2000, ledBoard.hill1.percent(100));
+    ledBoard.gate.fadePercent(1000, 80);
+    ledBoard.hill1.fadePercent(2000, 100);
     wait(2000);
 
-    ledBoard.hill1.fade(1000, ledBoard.hill1.percent(80));
-    ledBoard.hill2.fade(2000, ledBoard.hill2.percent(100));
+    ledBoard.hill1.fadePercent(1000, 80);
+    ledBoard.hill2.fadePercent(2000, 100);
     wait(2000);
 
     // t=36sec
-    ledBoard.hill2.fade(1000, ledBoard.hill2.percent(80));
-    ledBoard.key_left.fade(2000, ledBoard.key_left.percent(100));
+    ledBoard.hill2.fadePercent(1000, 80);
+    ledBoard.key_left.fadePercent(2000, 100);
 
     //caw 3 36.2 - 36.8
     wait_until(36200);
-    ledBoard.key_right.fade(300, ledBoard.key_right.percent(100));
+    ledBoard.key_right.fadePercent(300, 100);
     wait(300);
     ledBoard.key_right.fade(300, 0);
 
     //caw 3 36.9 - 37.6
     wait_until(36900);
-    ledBoard.key_right.fade(350, ledBoard.key_right.percent(100));
+    ledBoard.key_right.fadePercent(350, 100);
     wait(350);
     ledBoard.key_right.fade(350, 0);
 
     // t=38sec
     wait_until(38000);
 
-    ledBoard.key_left.fade(3000, ledBoard.key_left.percent(0));
-    ledBoard.key_right.fade(3000, ledBoard.key_right.percent(0), ledBoard.key_right.percent(100));
+    ledBoard.key_left.fadePercent(3000, 0);
+    ledBoard.key_right.setPercent(100);
+    ledBoard.key_right.fadePercent(3000, 0);
     wait(3000);
 
     // t=41sec
