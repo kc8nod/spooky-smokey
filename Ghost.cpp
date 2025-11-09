@@ -1,26 +1,26 @@
 #include "Ghost.h"
 
-Ghost::Ghost(int pin) {
+Ghost::Ghost(int pin, int zeroPosition) {
+    this->zeroPosition = zeroPosition;
+    speed.set(zeroPosition);
     servo.attach(pin);
     update();
 }
 
-void Ghost::set(int s) {
-    speed.set(s);
+int Ghost::speedValue(int pct) {
+    if(pct>0){
+        return map(pct, 0, 100, zeroPosition, Ghost::MAX_VALUE);
+    }else{
+        return map(pct, -100, 0, Ghost::MIN_VALUE, zeroPosition);
+    }
 }
 
 void Ghost::set_pct(int p) {
-    int s = map(p, -100, 100, GhostValue::MIN_VALUE, GhostValue::MAX_VALUE);
-    speed.set(s);
-}
-
-void Ghost::ramp(int duration, int target) {
-    speed.fade(duration, target);
+    speed.set(speedValue(p));
 }
 
 void Ghost::ramp_pct(int duration, int p) {
-    int s = map(p, -100, 100, GhostValue::MIN_VALUE, GhostValue::MAX_VALUE);
-    speed.fade(duration, s);
+    speed.fade(duration, speedValue(p));
 }
 
 void Ghost::update() {
@@ -29,7 +29,7 @@ void Ghost::update() {
 }
 
 void Ghost::stop() {
-    speed.set(speed.DEFAULT_VALUE);
+    speed.set(zeroPosition);
     update();
 }
 

@@ -2,29 +2,27 @@
 #include "FadeValue.h"
 #include <Servo.h>
 
-class GhostValue : public FadeValue {
+class GhostValue {
 public:
-    static const int MAX_VALUE = 180;  // Override parent's MAX_VALUE
-    static const int MIN_VALUE = 0;     // Minimum value for LED brightness
-    static const int DEFAULT_VALUE = 90; // Default to STOP position
     
-    // Constructor - can use parent's constructor
-    using FadeValue::FadeValue;
 };
 
 class Ghost {
-public:
 
-private:
-    GhostValue speed;
+  private:
+    static const int MAX_VALUE = 180;  // Override parent's MAX_VALUE
+    static const int MIN_VALUE = 0;     // Minimum value for LED brightness
+
+    FadeValue speed;
+    int zeroPosition;
     Servo servo;
 
-public:
-    Ghost(int pin);
+    int speedValue(int pct);
+
+  public:
+    Ghost(int pin, int zeroPosition);
     void update();
-    void set(int speed);
     void set_pct(int p);
-    void ramp(int duration, int target);
     void ramp_pct(int duration, int p);
     void stop();
 };

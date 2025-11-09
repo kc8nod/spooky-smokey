@@ -14,8 +14,8 @@
 #define SPI_DATA           4
 #define SPI_CLK            5
 #define SPI_LATCH          6
-#define GHOST_SERVO_LEFT   7
-#define GHOST_SERVO_RIGHT  8
+#define GHOST_SERVO_LEFT   8
+#define GHOST_SERVO_RIGHT  7
 
 
 
@@ -56,8 +56,8 @@ DY::Player sound(&playerSerialPort);
 
 LEDboard ledBoard = LEDboard(SPI_CLK, SPI_DATA, SPI_LATCH);
 
-Ghost ghost_left(GHOST_SERVO_LEFT);
-Ghost ghost_right(GHOST_SERVO_RIGHT);  
+Ghost ghost_left(GHOST_SERVO_LEFT, 98);
+Ghost ghost_right(GHOST_SERVO_RIGHT, 90);  
 
 void setup() {
   pinMode(TRIGGER, INPUT_PULLUP);
@@ -67,8 +67,8 @@ void setup() {
   ghost_left.stop();
   ghost_right.stop();
 
-  Serial.begin(9600);
-  test();
+  Serial.begin(115200);
+
   Serial.println("Starting!");
   restart_idle_time();
 }
@@ -86,7 +86,7 @@ void loop() {
     restart_idle_time();
   }
 
-test();
+  test2();
 
   if(idle_time_expired()){
     show_attract();
@@ -117,8 +117,8 @@ void show1() {
     ledBoard.key_left.fadePercent(5000, 50);
     ledBoard.key_right.fadePercent(5000, 50);
 
-    ghost_left.ramp(5000, GhostValue::DEFAULT_VALUE - 60);
-    ghost_right.ramp(5000, GhostValue::DEFAULT_VALUE + 60);
+    ghost_left.ramp_pct(5000, -66);
+    ghost_right.ramp_pct(5000, 66);
 
     wait(5000);
 
@@ -213,8 +213,8 @@ void show1() {
     // t=41sec
     wait_until(41000);
 
-    ghost_left.ramp(1000, GhostValue::DEFAULT_VALUE);
-    ghost_right.ramp(1000, GhostValue::DEFAULT_VALUE);
+    ghost_left.ramp_pct(1000, 0);
+    ghost_right.ramp_pct(1000, 0);
 
     // Moon pulse
 
@@ -371,4 +371,18 @@ void update_all(){
   ledBoard.write();
   ghost_left.update();
   ghost_right.update();
+}
+
+
+void test2(){ 
+  Serial.println("servo test");
+  ledBoard.off();
+
+  for(int s=-10; s<10; s+=1) {
+    Serial.print("ghosts speed ");
+    Serial.println(s);
+    ghost_left.set_pct(s);
+    ghost_right.set_pct(s);
+    wait(1000);
+  }
 }
